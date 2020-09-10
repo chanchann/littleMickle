@@ -32,3 +32,85 @@ extern const int bufSize = fcn();
 // file_1.h
 extern const int bufSize; // same bufSize as defined in file_1.cc
 ```
+
+## 2.4.1. References to const
+
+```cpp
+const int ci = 1024;
+const int &r1 = ci; // ok: both reference and underlying object are const
+r1 = 42; // error: r1 is a reference to const
+int &r2 = ci; // error: non const reference to a const object
+```
+
+## Initialization and References to const
+
+We noted that there are two exceptions to the rule that the type of a reference must match the type of the object to which it refers
+
+The first exception is that we can initialize a reference to const from any expression that can be converted to the type of the reference
+
+```cpp
+// In particular, we can bind a reference to
+const to a nonconst object, a literal, or a more general expression:
+
+int i = 42;
+const int &r1 = i; // we can bind a const int& to a plain int object
+const int &r2 = 42; // ok: r2 is a reference to const
+const int &r3 = r1 * 2; // ok: r3 is a reference to const
+int &r4 = r * 2; // error: r4 is a plain, non const reference
+```
+
+```cpp
+double dval = 3.14;
+const int &ri = dval;
+// Here ri refers to an int.  Operations on ri will be integer operations, but dval is a floating-point number, not an integer. To ensure that the object to which ri is bound is an int, the compiler transforms this code into something like
+
+const int temp = dval; // create a temporary const int from the double
+const int &ri = temp; // bind ri to that temporary
+// In this case, ri is bound to a temporary object. A temporary object is an unnamed object created by the compiler when it needs a place to store a result from evaluating an expression.
+//  If ri weren’t const, we could assign to ri. Doing so would change the object to which ri is bound. That object is a temporary, not dval.
+```
+
+## A Reference to const May Refer to an Object That Is Not const
+
+```cpp
+int i = 42;
+int &r1 = i; // r1 bound to i
+const int &r2 = i; // r2 also bound to i; but cannot be used to change i
+r1 = 0; // r1 is not const; i is now 0
+r2 = 0; // error: r2 is a reference to const
+```
+
+It is important to realize that a reference to const restricts only what we can do
+through that reference. Binding a reference to const to an object says nothing about
+whether the underlying object itself is const. Because the underlying object might be
+nonconst, it might be changed by other means:
+
+## 2.4.2. Pointers and const
+
+A pointer to const may not be used to change the object to which the pointer points. We may store the address of a const object only in a pointer to const
+
+```cpp
+const double pi = 3.14; // pi is const; its value may not be changed
+double *ptr = &pi; // error: ptr is a plain pointer
+const double *cptr = &pi; // ok: cptr may point to a double that is const
+*cptr = 42; // error: cannot assign to *cptr
+```
+
+There are two exceptions to the rule that the types of a pointer and the object to which it points must match. The first exception is that we can use a pointer to const to point to a nonconst object:
+
+```cpp
+double dval = 3.14; // dval is a double; its value can be changed
+cptr = &dval; // ok: but can't change dval through cptr
+```
+
+Defining a pointer as a pointer to const affects only what we can do  with the pointer. It is important to remember that there is no guarantee that an object pointed to by a pointer to const won’t change.
+
+## In conclusion
+
+1. The first exception is that we can use a pointer to const to point to a nonconst object:
+
+2. only const int& a = b(double); can convert 
+
+see [exception1](./exception1.cpp)
+
+
