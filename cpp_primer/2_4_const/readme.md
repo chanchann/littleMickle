@@ -113,4 +113,24 @@ Defining a pointer as a pointer to const affects only what we can do  with the p
 
 see [exception1](./exception1.cpp)
 
+## const Pointers
 
+Unlike references, pointers are objects. 
+
+we can have a pointer that is itself const.
+
+Like any other const object, a const pointer
+must be initialized, and once initialized, its value (i.e., the address that it holds) may
+not be changed
+
+We indicate that the pointer is const by putting the const after the
+*. This placement indicates that it is the pointer, not the pointed-to type, that is
+const:
+
+```cpp
+int errNumb = 0;
+int *const curErr = &errNumb; // curErr will always point to errNumb
+const double pi = 3.14159;
+const double *const pip = &pi; // pip is a const pointer to a const
+object
+```
