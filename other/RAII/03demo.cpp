@@ -9,4 +9,6 @@ https://zhuanlan.zhihu.com/p/34660259
 
 https://github.com/jiayunwei/mutexLock
 
+https://www.codeproject.com/Articles/10141/RAII-Dynamic-Objects-and-Factories-in-C
+
 */

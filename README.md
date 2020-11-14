@@ -18,4 +18,4 @@ Write something
 
 8. naming rules
 
-9. 
+9. const_cast
