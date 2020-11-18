@@ -6,7 +6,7 @@ Write something
 
 2. thread 
 
-3. RAII
+3. RAII  
 
 4. template 
 
@@ -19,3 +19,5 @@ Write something
 8. naming rules
 
 9. const_cast
+
+
