@@ -55,3 +55,24 @@ top level const : 指针本身是常量
 
 low-level const : 指针所指的对象是常量
 
+## 2.4.4 constexpr和常量表达值
+
+常量表达式(const expression) 概念知道
+
+```cpp
+// 只有当size是一个constexpr函数时，才正确
+constexpr int sz = size(); 
+```
+
+算术类型，引用，指针都属于字面量类型。
+
+字面值类型是什么?? 
+
+## 指针和constexpr
+
+
+
+
+ 
+
+
