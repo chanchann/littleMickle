@@ -24,6 +24,8 @@ private:
     // FileHandle对象代表一种资源，它并不具有拷贝语义，因此我们将拷贝构造函数和赋值运算符声明为私有成员
     FileHandle(FileHandle const&);
     FileHandle& operator= (FileHandle const&);
+
+    Show() { }
     FILE *p;
 };
 
