@@ -22,3 +22,8 @@ Record lookup(const Phone&);
 Record lookup(Phone*);
 Record lookup(const Phone*);
 ```
+
+## 何时不该用重载函数
+
+## const_cast和重载
+
