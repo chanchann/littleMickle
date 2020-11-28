@@ -27,3 +27,4 @@ Record lookup(const Phone*);
 
 ## const_cast和重载
 
+## 调用重载函数
