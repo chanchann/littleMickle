@@ -28,3 +28,6 @@ Record lookup(const Phone*);
 ## const_cast和重载
 
 ## 调用重载函数
+
+## 6.4.1 重载和作用域
+

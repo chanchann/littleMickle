@@ -1,0 +1,6 @@
+Please input some trans records ...
+0-201-70353-X has 1 records
+0-201-82470-1 has 1 records
+0-201-88954-4 has 4 records
+0-399-82477-1 has 2 records
+0-201-78345-X has 2 records
