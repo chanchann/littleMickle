@@ -1,7 +1,10 @@
+## 2.5 处理类型
 
+## 2.5.1 类型别名
 
+typedef
 
-
+using
 
 ## decltype 类型指示符
 

@@ -6,4 +6,3 @@ g++ -fdump-class-hierarchy xxx.cpp
 
 https://blog.csdn.net/m0_37531667/article/details/72520740
 
-## 空类的大小
