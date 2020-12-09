@@ -1,12 +1,10 @@
 #include <iostream>
 #include <thread>
 
-void thread_function()
-{
+void thread_function() {
     std::cout << "Inside Thread :: ID  = " << std::this_thread::get_id() << std::endl;    
 }
-int main()  
-{
+int main()   {
     std::thread threadObj1(thread_function);
     std::thread threadObj2(thread_function);
  

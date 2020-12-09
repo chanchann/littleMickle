@@ -10,14 +10,12 @@ After creating this new thread, main thread will print some data on console and 
 #include <iostream>
 #include <thread>
  
-void thread_function()
-{
+void thread_function() {
     for(int i = 0; i < 10; i++)
         std::cout << "thread function Executing : " << i << std::endl;
 }
  
-int main()  
-{
+int main() {
     // New Thread will start just after the creation of new object 
     // and will execute the passed callback in parallel to thread that has started it.
     std::thread threadObj(thread_function);

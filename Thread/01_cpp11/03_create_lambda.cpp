@@ -1,8 +1,7 @@
 #include <iostream>
 #include <thread>
 
-int main()  
-{
+int main() {
     int x = 9;
     std::thread threadObj([] {
             for(int i = 0; i < 10; i++)
