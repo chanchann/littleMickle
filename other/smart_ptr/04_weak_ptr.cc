@@ -39,6 +39,7 @@ public:
 private:
     std::shared_ptr<A> pointer;
 };
+
 int main() {
     {
         auto a = std::make_shared<A>();
@@ -46,8 +47,6 @@ int main() {
         a->set_pointer(b);
         b->set_pointer(a);
     }
-    // if(a) std::cout << "a still exists !!" << std::endl;
-    // if(b) std::cout << "b still exists !!" << std::endl;
-
+    //当离开作用域后A，B都应该被析构，但是结果两者都没有被析构，而导致了内存泄漏
     return 0;
 }
