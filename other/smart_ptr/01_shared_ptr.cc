@@ -12,7 +12,6 @@ std::make_shared 就能够用来消除显式的使用 new，所以std::make_shar
 void foo(std::shared_ptr<int> i) {
     (*i)++;
 }
-s
 int main() {
     // auto pointer = new int(10); 
     // Constructed a std::shared_ptr

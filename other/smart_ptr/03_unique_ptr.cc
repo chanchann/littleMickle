@@ -12,6 +12,12 @@ std::unique_ptr<T> make_unique( Args&& ...args ) {
 
 既然是独占，换句话说就是不可复制。
 但是，我们可以利用 std::move 将其转移给其他的 unique_ptr
+
+与shared_ptr相比unique_ptr除了独占性的特点外，还能够指向一个数组：std::unique_ptr<int []> p(new int[10]);
+
+shared_ptr与unique_ptr的使用需要根据场景决定，如果希望只有一个智能指针管理资源或者管理数组就使用unique_ptr，如果希望使用多个智能指针管理同一个资源就使用shared_ptr。
+
+
 */
 #include <iostream>
 #include <memory>

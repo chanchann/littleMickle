@@ -23,4 +23,16 @@ std::shared_ptr<int> p(new int[10], [](int *p){delete []p;})//lambda表达式作
 #include <iostream>
 #include <memory>
 
-
+class Test {
+public:
+    Test(int a = 0 ) : m_a(a) {}
+    ~Test() {
+        std::cout << "Calling destructor" << std::endl;
+    }
+public:
+    int m_a;
+};
+int main() {
+    std::shared_ptr<Test> sptr1( new Test[5], [](Test* p) { delete[] p; } );
+    return 0;
+}

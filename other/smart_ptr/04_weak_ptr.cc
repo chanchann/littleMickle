@@ -48,5 +48,6 @@ int main() {
         b->set_pointer(a);
     }
     //当离开作用域后A，B都应该被析构，但是结果两者都没有被析构，而导致了内存泄漏
+    //valgrind --tool=memcheck --leak-check=full ./test 查看内存泄漏
     return 0;
 }
