@@ -3,6 +3,7 @@
 
 对比下效率
 
+但我结果，emplace_back要慢点???? ???
 */
 
 #include <vector>
@@ -39,8 +40,7 @@ public:
 };
 
  
-struct President
-{
+struct President {
     std::string name;
     std::string country;
     int year;
@@ -81,6 +81,7 @@ void test_push_back(int count) {
 
 int main() {
     int count = 1000000;
-    test_push_back(count);
     test_emplace_back(count);
+    test_push_back(count);
+
 }

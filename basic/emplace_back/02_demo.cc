@@ -1,5 +1,13 @@
 /*
 https://en.cppreference.com/w/cpp/container/vector/emplace_back
+
+emplace_back:
+I am being constructed.
+
+push_back:
+I am being constructed.
+I am being moved.
+
 */
 
 #include <vector>
