@@ -34,6 +34,7 @@ public:
     Test(Test &&test) {//移动构造函数
         std::cout << "Move Constructor" << std::endl;
         m_p = std::move(test.m_p);
+        // m_p = std::unique_ptr<int>(test.m_p.release());  // 亦可
     }
     Test &operator=(Test &&test) {//移动赋值操作符
         std::cout << "Move Assignment operator" << std::endl;
