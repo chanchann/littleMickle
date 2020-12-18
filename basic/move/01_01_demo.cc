@@ -1,13 +1,12 @@
 /*
-*** Error in `./test': munmap_chunk(): invalid pointer: 0x00007fff8677e5b0 ***
-delete了不是new出来的指针
-
+写个智能指针版本
 */
 
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <memory>
+#include "make_unique.h"
 
 using namespace std;
 
@@ -15,17 +14,14 @@ class Test {
 public:
     explicit Test() { 
         std::cout << " Contructor " << std::endl; 
-        m_p = new int();
+        m_p = make_unique<int>();
     };
     ~Test() {
-        delete m_p;
-        m_p = nullptr;
-        std::cout << "deconstructor ..." << std::endl;
+        std::cout << " deContructor... " << std::endl; 
     }
     Test(const Test& test) {  // 拷贝构造函数
         std::cout << "copy Constructor" << std::endl;
-        m_p = new int(*test.m_p);
-        // *m_p = *test.m_p;  // 这里一定要注意！！constructor！！
+        m_p = make_unique<int>(*test.m_p);
     }
     Test &operator=(const Test &test) {  // 拷贝赋值
         std::cout << "copy assignment" << std::endl;
@@ -37,21 +33,17 @@ public:
     }
     Test(Test &&test) {//移动构造函数
         std::cout << "Move Constructor" << std::endl;
-        delete m_p; // 先前资源释放
-        m_p = test.m_p;
-        test.m_p = nullptr; //修改参数的资源
+        m_p = std::move(test.m_p);
     }
     Test &operator=(Test &&test) {//移动赋值操作符
         std::cout << "Move Assignment operator" << std::endl;
         if (this != &test) {
-            delete m_p; // 先前资源释放
-            m_p = test.m_p;
-            test.m_p= nullptr; //修改参数资源
+            m_p = std::move(test.m_p);
         }
         return *this;
     }
 private:
-    int *m_p;
+    std::unique_ptr<int> m_p;
 };
 
 void test01() {

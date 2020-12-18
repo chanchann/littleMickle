@@ -8,5 +8,15 @@
 
 ## 什么时候什么情况使用
 
+TODO:
+
+https://www.zhihu.com/question/31614576
+
+https://www.zhihu.com/question/418933312
+
+https://www.zhihu.com/question/291817850
 
 ## noexcept
+
+## TODO : boost exeption
+
