@@ -1,8 +1,20 @@
+/*
+这个例子去学会使用gdb
+
+查看汇编了解inline的真实作用
+https://zhuanlan.zhihu.com/p/50812510
+
+结合使用vscode解决问题
+
+这个是浅拷贝带来的问题
+https://blog.csdn.net/qq_29344757/article/details/76037255
+
+*/
+
+
 #include <iostream>
 using namespace std;
-// https://blog.csdn.net/qq_29344757/article/details/76037255
-// 如何利用gdb调试
-// https://deepzz.com/post/gdb-debug.html
+
 class Person {
 public:
 	explicit Person(int age) : m_age(new int(age)) {}
@@ -36,7 +48,9 @@ public:
 int main() {
     Person p1(10);
     Person p2(15);
+    std::string test = "中文";
     cout << "11" << endl;
+    // p2 = &p1;
     p2 = p1;
     printf("%p\n", p1);
     printf("%p\n", p2);
