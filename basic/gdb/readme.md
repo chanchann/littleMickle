@@ -1,9 +1,12 @@
 ## 如何利用gdb调试
 
+https://zhuanlan.zhihu.com/p/74897601
+
 https://deepzz.com/post/gdb-debug.html
 
 https://blog.csdn.net/haoel/article/details/2879
 
+https://zhuanlan.zhihu.com/p/100385553
 
 ## cgdb
 
@@ -35,4 +38,12 @@ u 执行到指定行(until)
 
 finish 从进入的函数中退出
 
-break 设置断点(在代码窗口用空格键设置断点)
+break / b 设置断点(在代码窗口用空格键设置断点)
+
+info b 查看已设置的断点
+
+
+
+
+
+
