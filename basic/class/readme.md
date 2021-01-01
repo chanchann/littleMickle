@@ -8,4 +8,10 @@
 
 ## 友元
 
+## 类中成员变量是引用
+
+https://www.cnblogs.com/tangmiao/p/7777008.html
+
+https://stackoverflow.com/questions/12387239/reference-member-variables-as-class-members
+
 

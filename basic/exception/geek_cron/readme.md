@@ -20,3 +20,11 @@ https://www.zhihu.com/question/291817850
 
 ## TODO : boost exeption
 
+## TODO : std::runtime_error
+
+https://stackoverflow.com/questions/1569726/difference-stdruntime-error-vs-stdexception
+
+https://zhuanlan.zhihu.com/p/142296984
+
+https://zhuanlan.zhihu.com/p/35147769
+
