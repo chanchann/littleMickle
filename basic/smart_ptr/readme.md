@@ -20,6 +20,8 @@ std::move()只是类型转换，并没有将对象置nullptr功能
 
 什么实现的？
 
+看移动构造函数实现，比如unique_ptr的移动构造函数就是reset(xx.release())
+
 ## C++ how to pass unique_ptr to function and still benefit from polymorphism?
 
 https://stackoverflow.com/questions/47275832/c-how-to-pass-unique-ptr-to-function-and-still-benefit-from-polymorphism
@@ -44,3 +46,7 @@ C(std::move(b));
 ```
 
 https://stackoverflow.com/questions/50996080/how-to-obtain-polymorphic-behavior-with-unique-pointers
+
+## Downcasting base to derived
+
+https://stackoverflow.com/questions/21174593/downcasting-unique-ptrbase-to-unique-ptrderived
