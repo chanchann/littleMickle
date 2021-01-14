@@ -12,7 +12,7 @@ unique_ptr 不是线程安全
 
 ## 思考:如何smart pointer for class
 
-我觉得可以都用unique_ptr取代之前的指针
+我觉得可以都用unique_ptr取代之前的指针,除非考虑到要共享(shared_ptr)
 
 ## 思考:
 
@@ -50,3 +50,24 @@ https://stackoverflow.com/questions/50996080/how-to-obtain-polymorphic-behavior-
 ## Downcasting base to derived
 
 https://stackoverflow.com/questions/21174593/downcasting-unique-ptrbase-to-unique-ptrderived
+
+
+## Should we pass a shared_ptr by reference or by value?
+
+There is no reason to pass by value, unless the goal is to share ownership of an object.
+
+## How do I pass smart pointers into functions?
+
+https://stackoverflow.com/questions/12519812/how-do-i-pass-smart-pointers-into-functions
+
+## Is it useful to pass std::weak_ptr to functions?
+
+https://stackoverflow.com/questions/53599103/is-it-useful-to-pass-stdweak-ptr-to-functions
+
+callbacks has a lambda that takes a weak_ptr. It is used to remove any m_callbacks whose lifetime has ended.
+
+TODO: 
+
+## weak_ptr Automatic event cleanup in C++
+
+http://nercury.github.io/c++/interesting/2016/02/22/weak_ptr-and-event-cleanup.html
