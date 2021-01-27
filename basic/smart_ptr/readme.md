@@ -71,3 +71,7 @@ TODO:
 ## weak_ptr Automatic event cleanup in C++
 
 http://nercury.github.io/c++/interesting/2016/02/22/weak_ptr-and-event-cleanup.html
+
+## shared_from_this使用注意
+
+https://blog.csdn.net/weixin_43468441/article/details/103553687
