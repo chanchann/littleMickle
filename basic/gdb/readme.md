@@ -42,8 +42,15 @@ break / b 设置断点(在代码窗口用空格键设置断点)
 
 info b 查看已设置的断点
 
+# 不进入标准库debug
 
+verison > 7.11
 
+https://stackoverflow.com/questions/5676241/tell-gdb-to-skip-standard-files
+
+## 简单升级gdb
+
+https://stackoverflow.com/questions/32773255/how-to-update-gdb-to-most-current-stable-version
 
 
 
