@@ -26,5 +26,11 @@ std::unordered_map<CarType, std::string, EnumClassHash> mp {
 int main() {
     std::string test = mp[CarType::SUV];
     std::cout << test << std::endl;
+    auto res = mp.insert({CarType::SUV, "test"});
+    std::cout << res.second << std::endl;
+    mp.insert({CarType::SUV, "111"});
+    for(auto it = mp.begin(); it != mp.end(); it++) {
+        std::cout << it->second << std::endl;
+    }
     return 0;
 }
