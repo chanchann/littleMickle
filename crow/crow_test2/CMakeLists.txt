@@ -6,6 +6,8 @@ SET(CMAKE_CXX_STANDARD 11)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -pthread" )
 
+set(CMAKE_BUILD_TYPE "Debug")
+
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
