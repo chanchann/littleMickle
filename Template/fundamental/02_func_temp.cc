@@ -21,7 +21,7 @@ char const *max(char const *a, char const *b) {
 // const char *max(const char *a, const char *b) {
 //     return std::strcmp(b, a) < 0 ? a : b;
 // }
-
+ 
 template <typename T> 
 T const &max(T const &a, T const &b, T const &c) {
     std::cout << "3" << std::endl;

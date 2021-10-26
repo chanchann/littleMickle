@@ -17,6 +17,14 @@ constexpr修饰的函数，如果其传入的参数可以在编译时期计算�
 而检测constexpr函数是否产生编译时期值的方法很简单，就是利用std::array需要编译期常值才能编译通过的小技巧。
 
 
+## cpp primer 
+
+1. const expression 定义
+
+2. 怎么判断是否是常量表达式 - 数据类型 + 初始值
+
+3. 什么时候用到常量表达式
+
 ## ref
 
 https://zhuanlan.zhihu.com/p/20206577

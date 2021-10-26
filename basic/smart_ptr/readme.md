@@ -75,3 +75,11 @@ http://nercury.github.io/c++/interesting/2016/02/22/weak_ptr-and-event-cleanup.h
 ## shared_from_this使用注意
 
 https://blog.csdn.net/weixin_43468441/article/details/103553687
+
+## shared_ptr的disadvantage
+
+https://stackoverflow.com/questions/7657718/when-to-use-shared-ptr-and-when-to-use-raw-pointers
+
+https://stackoverflow.com/questions/27237070/disadvantages-of-shared-ptr
+
+
