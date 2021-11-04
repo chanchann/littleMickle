@@ -7,3 +7,6 @@ https://zhuanlan.zhihu.com/p/104450480
 https://stackoverflow.com/questions/2118541/check-if-parameter-pack-contains-a-type
 
 
+## tuple 
+
+https://stackoverflow.com/questions/687490/how-do-i-expand-a-tuple-into-variadic-template-functions-arguments
