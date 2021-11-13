@@ -3,22 +3,21 @@
 #include <typeinfo>
 #include <memory>
 #include <cstdlib>
-#ifndef _MSC_VER
 #include <cxxabi.h>
-#endif
+
 
 template <class T>
 std::string type_name()
 {
 	typedef typename std::remove_reference<T>::type TR;
-	std::unique_ptr<char, void(*)(void*)> own(
-#ifndef __GNUC__
-		nullptr,
-#else
-		abi::__cxa_demangle(typeid(TR).name()), nullptr,
-		nullptr, nullptr),
-#endif
-		 std::free);
+	std::unique_ptr<char, void(*)(void*)> own
+	(
+		abi::__cxa_demangle(typeid(TR).name(), 
+							nullptr,
+							nullptr, 
+							nullptr),
+		std::free
+	);
 
 	std::string r = own != nullptr ? own.get() : typeid(TR).name();
 
@@ -54,7 +53,6 @@ int main(void)
 	std::string str = "Test";
 	Func(str);
 	Func(std::move(str));
-
-	system("pause");
+	
 	return 0;
 }
