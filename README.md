@@ -16,3 +16,7 @@ git clone https:://github.com.cnpmjs.org/xxx
 
 
 https://godbolt.org/
+
+## 如何commit 
+
+https://zhuanlan.zhihu.com/p/34223150
