@@ -387,5 +387,357 @@ $(filter %.elc,$(files)): %.elc: %.el
 ```
 
 `$(filter %.o,$(files))`表示调用Makefile的filter函数，过滤`$files`集，只要其中模式为`%.o`的内容
-1
+
 ## 书写命令
+
+### 显示命令
+
+```
+@echo 正在编译XXX模块......
+
+echo 正在编译XXX模块......
+```
+
+前者不会显示命令
+
+### 命令执行
+
+如果你要让上一条命令的结果应用在下一条命令时，你应该在同一行上使用分号分隔这两条命令。
+
+```
+exec:
+    cd /home/xxx; pwd
+```
+
+### 命令出错
+
+每当命令运行完后，make会检测每个命令的返回码，如果命令返回成功，那么make会执行下一条命令，当规则中所有的命令成功返回后，这个规则就算是成功完成了。
+
+如果一个规则中的某个命令出错了（命令退出码非零），那么make就会终止执行当前规则，这将有可能终止所有规则的执行。
+
+命令的出错并不表示就是错误的, 忽略命令的出错，我们可以在Makefile的命令行前加一个减号 - （在Tab键之后），标记为不管命令出不出错都认为是成功的
+
+```
+clean:
+    -rm -f *.o
+```
+
+全局的办法，给make加上 -i 或是 --ignore-errors 参数
+
+-k 或是 --keep-going ，这个参数的意思是，如果某规则中的命令出错了，那么就终止该规则的执行，但继续执行其它规则。
+
+## 嵌套执行make
+
+模块化
+
+```
+subsystem:
+    cd subdir && $(MAKE)
+
+# == 
+
+# 子目录叫subdir
+
+subsystem:
+    $(MAKE) -C subdir
+```
+
+定义$(MAKE)宏变量的意思是，也许我们的make需要一些参数
+
+总控Makefile的变量可以传递到下级的Makefile中（如果你显示的声明），但是不会覆盖下层的Makefile中所定义的变量，除非指定了 -e 参数。
+
+```
+export <variable ...>;
+
+unexport <variable ...>;
+```
+
+```
+# demo1
+
+export variable = value
+
+# == 
+
+variable = value
+export variable
+
+# == 
+export variable := value
+
+# == 
+variable := value
+export variable
+```
+
+```
+# demo2
+
+export variable += value
+
+# ==
+
+variable += value
+export variable
+```
+
+一个是 SHELL ，一个是 MAKEFLAGS ，这两个变量不管你是否export，其总是要传递到下层 Makefile中(系统级的环境变量)
+
+但是make命令中的有几个参数并不往下传递，它们是 -C , -f , -h, -o 和 -W 
+
+如果你不想往下层传递参数
+
+```
+subsystem:
+    cd subdir && $(MAKE) MAKEFLAGS=
+```
+
+还有一个在“嵌套执行”中比较有用的参数， -w 或是 --print-directory 会在make的过程中输出一些信息
+
+```
+make: Entering directory `/home/hchen/gnu/make'.
+
+make: Leaving directory `/home/hchen/gnu/make'
+```
+
+当你使用 -C 参数来指定make下层Makefile时， -w 会被自动打开的。
+
+如果参数中有 -s （ --slient ）或是 --no-print-directory ，那么， -w 总是失效的。
+
+
+## 定义命令包
+
+```
+define run-yacc
+yacc $(firstword $^)
+mv y.tab.c $@
+endef
+```
+
+```
+foo.c : foo.y
+    $(run-yacc)
+```
+
+$^ 就是 foo.y
+
+$@ 就是 foo.c
+
+## 使用变量
+
+在Makefile中的定义的变量，就像是C/C++语言中的宏一样，他代表了一个文本字串，在Makefile中执行的时候其会自动原模原样地展开在所使用的地方。
+
+不过可以改变他
+
+## 变量基础
+
+使用时，需要给在变量名前加上 $ 符号，但最好用小括号 () 或是大括号 {} 把变量给包括起来。如果你要使用真实的 $ 字符，那么你需要用 $$ 来表示。
+
+```
+# demo1
+
+objects = program.o foo.o utils.o
+program : $(objects)
+    cc -o program $(objects)
+
+$(objects) : defs.h
+```
+
+```
+# demo2 
+
+foo = c
+prog.o : prog.$(foo)
+    $(foo)$(foo) -$(foo) prog.$(foo)
+
+==
+
+prog.o : prog.c
+    cc -c prog.c
+
+# 这里说明展开，但是不要这么用
+```
+
+## 变量中的变量
+
+1. =
+
+```
+foo = $(bar)
+bar = $(ugh)
+ugh = Huh?
+
+all:
+    echo $(foo)
+```
+
+变量是可以使用后面的变量来定义
+
+注意坏处 : 递归定义
+
+```
+CFLAGS = $(CFLAGS) -O
+
+# or 
+
+A = $(B)
+B = $(A)
+```
+
+2. :=
+
+```
+x := foo
+y := $(x) bar
+x := later
+
+# ==
+
+y := foo bar
+x := later
+```
+
+前面的变量不能使用后面的变量，只能使用前面已定义好了的变量
+
+```
+ifeq (0,${MAKELEVEL})
+cur-dir   := $(shell pwd)
+whoami    := $(shell whoami)
+host-type := $(shell arch)
+MAKE := ${MAKE} host-type=${host-type} whoami=${whoami}
+endif
+```
+
+系统变量“MAKELEVEL”, 会记录了我们的当前Makefile的调用层数。
+
+```
+nullstring :=
+space := $(nullstring) # end of the line
+```
+
+这里代表一个空格(empty +(空格) + #)
+
+```
+dir := /foo/bar    # directory to put the frobs in
+```
+
+dir这个变量的值是“/foo/bar”，后面还跟了4个空格，如果我们这样使用这样变量来指定别的目录——“$(dir)/file”那么就完蛋了。
+
+3. ?=
+
+```
+FOO ?= bar
+```
+
+如果FOO没有被定义过，那么变量FOO的值就是“bar”
+
+果FOO先前被定义过，那么这条语将什么也不做
+
+其等价于：
+
+```
+ifeq ($(origin FOO), undefined)
+    FOO = bar
+endif
+```
+
+## 变量高级用法
+
+### 变量的替换
+
+```
+foo := a.o b.o c.o
+bar := $(foo:.o=.c)
+```
+
+```
+foo := a.o b.o c.o
+bar := $(foo:%.o=%.c)
+```
+
+### 把变量的值再当成变量
+
+```
+x = y
+y = z
+a := $($(x))
+```
+
+$(x)的值是“y”，所以$($(x))就是$(y)，于是$(a)的值就是“z”
+
+### 追加变量值 +=
+
+```
+objects = main.o foo.o bar.o utils.o
+objects += another.o
+```
+
+如果变量之前没有定义过，那么， += 会自动变成 =
+
+如果前面有变量定义，那么 += 会继承于前次操作的赋值符。如果前一次的是 := ，那么 += 会以 := 作为其赋值符, 前次的赋值符是 = ，所以 += 也会以 = 来做为赋值
+
+### override 指示符
+
+如果有变量是通常make的命令行参数设置的，那么Makefile中对这个变量的赋值会被忽略。
+
+如果你想在Makefile中设置这类参数的值，那么，你可以使用“override”指示符
+
+```
+override <variable>; = <value>;
+
+override <variable>; := <value>;
+
+override <variable>; += <more text>;
+```
+
+### 多行变量 define
+
+```
+define two-lines
+echo foo
+echo $(bar)
+endef
+```
+
+### 环境变量
+
+CFLAGS
+
+### 目标变量
+
+作用范围只在这条规则以及连带规则中，所以其值也只在作用范围内有效。而不会影响规则链以外的全局变量的值
+
+```
+<target ...> : <variable-assignment>;
+
+<target ...> : overide <variable-assignment>
+```
+
+```
+prog : CFLAGS = -g
+prog : prog.o foo.o bar.o
+    $(CC) $(CFLAGS) prog.o foo.o bar.o
+
+prog.o : prog.c
+    $(CC) $(CFLAGS) prog.c
+
+foo.o : foo.c
+    $(CC) $(CFLAGS) foo.c
+
+bar.o : bar.c
+    $(CC) $(CFLAGS) bar.c
+```
+
+不管全局的 $(CFLAGS) 的值是什么，在prog目标，以及其所引发的所有规则中（prog.o foo.o bar.o的规则）， $(CFLAGS) 的值都是 -g
+
+### 模式变量
+
+
+
+
+
+
+
+
+
+
