@@ -732,12 +732,175 @@ bar.o : bar.c
 
 ### 模式变量
 
+## 使用条件判断
 
+```makefile
+libs_for_gcc = -lgnu
+normal_libs =
 
+foo: $(objects)
+ifeq ($(CC),gcc)
+    $(CC) -o foo $(objects) $(libs_for_gcc)
+else
+    $(CC) -o foo $(objects) $(normal_libs)
+endif
+```
 
+更为简洁 : 
 
+```makefile
+libs_for_gcc = -lgnu
+normal_libs =
 
+ifeq ($(CC),gcc)
+    libs=$(libs_for_gcc)
+else
+    libs=$(normal_libs)
+endif
 
+foo: $(objects)
+    $(CC) -o foo $(objects) $(libs)
+```
 
+ifdef 只是测试一个变量是否有值，其并不会把变量扩展到当前位置
 
+```
+# demo1
+
+bar =
+foo = $(bar)
+ifdef foo
+    frobozz = yes
+else
+    frobozz = no
+endif
+
+# demo2
+
+foo =
+ifdef foo
+    frobozz = yes
+else
+    frobozz = no
+endif
+```
+
+make是在读取Makefile时就计算条件表达式的值，并根据条件表达式的值来选择语句
+
+不要把自动化变量（如 $@ 等）放入条件表达式中，因为自动化变量是在运行时才有的。
+
+## 使用函数
+
+```makefile
+comma:= ,
+empty:=
+space:= $(empty) $(empty)
+foo:= a b c
+bar:= $(subst $(space),$(comma),$(foo))
+```
+
+调用了函数 subst ，这是一个替换函数，这个函数有三个参数，第一个参数是被替换字串，第二个参数是替换字串，第三个参数是替换操作作用的字串。
+
+这个函数也就是把 $(foo) 中的空格替换成逗号，所以 $(bar) 的值是 a,b,c 。
+
+### 字符串处理函数
+
+1. subst
+
+字符串替换函数
+
+```
+$(subst <from>,<to>,<text>)
+```
+
+```
+$(subst ee,EE,feet on the street)
+```
+2. patsubst
+
+模式字符串替换函数。
+
+```
+$(patsubst <pattern>,<replacement>,<text>)
+```
+
+```
+$(patsubst %.c,%.o,x.c.c bar.c)
+```
+
+把字串 x.c.c bar.c 符合模式 %.c 的单词替换成 %.o ，返回结果是 x.c.o bar.o
+
+3. strip
+
+去空格函数,去掉 <string> 字串中开头和结尾的空字符
+
+```
+$(strip <string>)
+```
+
+```
+$(strip a b c )
+```
+
+4. findstring
+
+查找字符串函数
+
+在字串 <in> 中查找 <find> 字串。
+
+```
+$(findstring <find>,<in>)
+```
+
+```
+$(findstring a,a b c)
+$(findstring a,b c)
+```
+
+第一个函数返回 a 字符串，第二个返回空字符串
+
+5. filter
+
+过滤函数
+
+以 <pattern> 模式过滤 <text> 字符串中的单词，保留符合模式 <pattern> 的单词。可以有多个模式。
+
+```
+$(filter <pattern...>,<text>)
+```
+
+```
+sources := foo.c bar.c baz.s ugh.h
+foo: $(sources)
+    cc $(filter %.c %.s,$(sources)) -o foo
+```
+
+`$(filter %.c %.s,$(sources))` 返回的值是 `foo.c bar.c baz.s` 。
+
+6. filter-out
+
+以 <pattern> 模式过滤 <text> 字符串中的单词，去除符合模式 <pattern> 的单词。可以有多个模式。
+
+```
+$(filter-out <pattern...>,<text>)
+```
+
+```
+objects=main1.o foo.o main2.o bar.o
+mains=main1.o main2.o
+```
+
+$(filter-out $(mains),$(objects)) 返回值是 foo.o bar.o 。
+
+7. sort
+
+给字符串 <list> 中的单词排序（升序）。
+
+```
+$(sort <list>)
+```
+
+`$(sort foo bar lose)` 返回 `bar foo lose` 。
+
+Be careful : sort 函数会去掉 <list> 中相同的单词。
 
