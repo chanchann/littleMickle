@@ -6,6 +6,7 @@ template <class T>
 struct Construct
 {
 	typedef typename std::remove_reference<T>::type U;
+	// 模版参数T可能引用类型，而创建对象时，需要原始类型
 	Construct() : m_ptr(new U) {}
 
 	typename std::add_lvalue_reference<U>::type Get() const
