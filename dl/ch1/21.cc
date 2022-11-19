@@ -6,7 +6,9 @@
 template <size_t... value>
 constexpr size_t fun()
 {
-    return (0 + ... + value);
+    // return (0 + ... + value);
+    // return (... + value);
+    return (value + ...);
 }
 
 int main()

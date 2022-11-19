@@ -8,7 +8,6 @@ foo() {
     return T();
 }
 
-
 template<typename T,
 typename = std::enable_if_t<(sizeof(T) > 4)>>
 void foo1() {
