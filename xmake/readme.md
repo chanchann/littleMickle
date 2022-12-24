@@ -1,6 +1,6 @@
 ## basic
 
-xmake create 
+xmake create
 
 xmake run
 
@@ -12,7 +12,7 @@ xmake
 xmake run -d
 ```
 
-## install 
+## install
 
 ```
 xmake (un)install -y
@@ -96,7 +96,7 @@ xmake show -t hello
 xmake update -f
 ```
 
-## xmake.lua 
+## xmake.lua
 
 ```c
 target("hello")
@@ -196,7 +196,7 @@ target("hello")
     add_includedirs("/tmp")
     set_languages("c99", "c++11")
     if is_mode("release") then
-        set_optimize("fastest") 
+        set_optimize("fastest")
         set_strip("all")
         set_symbols("hidden")
     end
@@ -223,7 +223,7 @@ target("hello")
 ## 过滤源文件
 
 ```
-use | 
+use |
 
 target("hello")
     set_kind("binary")
@@ -498,7 +498,7 @@ target("test3")
 ```
 add_links
 add_linkdirs
-add_includedirs  
+add_includedirs
 
 --> 依赖继承
 
@@ -986,7 +986,7 @@ target("pcheader")
     set_pcheader("src/stdafx.h")
 ```
 
-# other 
+# other
 
 ## 生成 compile_commands.json
 
@@ -998,3 +998,32 @@ xmake project -k compile_commands
 
 https://github.com/xmake-io/xmake/issues/1913
 
+
+##
+
+https://xmake.io/#/manual/builtin_variables?id=xmake-installation-script-directory
+
+```lua
+target("test")
+    on_run(function (target)
+        -- Copy the header file in the current script directory to the output directory
+        os.cp("$(scriptdir)/xxx.h", "$(buildir)/inc")
+    end)
+```
+
+```lua
+after_install(function (target)
+    os.cp("xxx/oldname", path.join(target:installdir(), "newname"))
+end)
+```
+
+## option
+
+https://github.com/xmake-io/xmake/issues/183
+
+https://tboox.org/cn/2016/08/07/custom-option/
+
+
+## valgrind
+
+https://github.com/xmake-io/xmake/issues/636
