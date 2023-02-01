@@ -994,6 +994,16 @@ target("pcheader")
 xmake project -k compile_commands
 ```
 
+## xrepo
+
+```c
+xrepo remove --all workflow
+```
+
+```c
+xmake repo -u
+```
+
 ## Build and run targets with given group pattern #1913
 
 https://github.com/xmake-io/xmake/issues/1913
@@ -1022,6 +1032,8 @@ end)
 https://github.com/xmake-io/xmake/issues/183
 
 https://tboox.org/cn/2016/08/07/custom-option/
+
+
 
 
 ## valgrind
