@@ -11,3 +11,7 @@ target("client")
 target("server")
     set_kind("binary")
     add_files("examples/server.cc")
+
+target("demo1")
+    set_kind("binary")
+    add_files("examples/demo1.cc")
