@@ -75,3 +75,5 @@ bin/lib-bash
 .idea
 
 .vscode
+
+.xmake
