@@ -10,6 +10,6 @@ add_packages("boost")
 add_packages("nlohmann_json")
 add_packages("openssl")
 
-target("binance_future_demo")
+target("demo1")
     set_kind("binary")
-    add_files("src/*.cc")
+    add_files("src/demo1.cc")
